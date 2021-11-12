@@ -8,6 +8,6 @@ class TesteRaiz extends Teste
     public function testeAcessar()
     {
         $resposta = $this->get(URL_RAIZ);
-        $this->verificar(true);
+        $this->verificarRedirecionar($resposta, URL_RAIZ . 'login');
     }
 }

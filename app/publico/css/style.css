@@ -1,8 +1,8 @@
-.create-account {
+.expandable-link {
   font-size: 1.5rem;
   transition: 0.3s;
 }
 
-.create-account:hover {
+.expandable-link:hover {
   font-size: 1.7rem;
 }

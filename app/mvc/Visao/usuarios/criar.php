@@ -2,7 +2,20 @@
   <h3>Create your account at</h3>
   <h2>PHP Drive!</h2>
 
-  <form action="./login.php" method="post">
+  <?php if ($mensagem) : ?>
+
+
+    <div class="col s12 m6">
+      <div class="card green lighten-2 darken-1">
+        <div class="card-content white-text">
+          <p><?= $mensagem ?></p>
+        </div>
+      </div>
+    </div>
+
+  <?php endif ?>
+
+  <form action="<?= URL_RAIZ . 'usuarios' ?>" method="post">
     <div class="row">
       <div class="input-field col s6">
         <input type="text" name="name" id="name" class="validate">

@@ -2,7 +2,7 @@
         <h3>Login to your account</h3>
         <h2>PHP Drive!</h2>
 
-        <form action="<?= URL_RAIZ ?>" method="POST">
+        <form action="<?= URL_RAIZ . 'login' ?>" method="POST">
             <div class="row">
                 <div class="input-field col s12">
                     <input type="email" name="email" id="email" class="validate">

@@ -8,7 +8,7 @@ use \Framework\DW3BancoDeDados;
 class Usuario extends Modelo
 {
   const BUSCAR_ID = 'SELECT * FROM usuarios WHERE id = ?';
-  const BUSCAR_NOME = 'SELECT * FROM usuarios WHERE nome = ?';
+  const BUSCAR_NOME = 'SELECT * FROM usuarios WHERE name = ?';
   const BUSCAR_EMAILS = 'SELECT * FROM usuarios WHERE email = ?';
   const INSERIR = 'INSERT INTO usuarios(name, surname, email, profilePhoto, password) VALUES (?,?,?,?,?)';
 
@@ -114,7 +114,7 @@ class Usuario extends Modelo
 
   public static function buscarId($id)
   {
-    $comando = DW3BancoDeDados::prepare(self::BUSCAR_EMAILS);
+    $comando = DW3BancoDeDados::prepare(self::BUSCAR_ID);
     $comando->bindValue(1, $id, PDO::PARAM_INT);
     $comando->execute();
     $registro = $comando->fetch();

@@ -15,4 +15,8 @@ $rotas = [
     '/usuarios' => [
         'POST' => '\Controlador\UsuarioControlador#armazenar',
     ],
+    '/drive' => [
+        'GET' => '\Controlador\DriveControlador#index',
+        'POST' => '\Controlador\DriveControlador#armazenar',
+    ],
 ];

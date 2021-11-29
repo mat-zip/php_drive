@@ -5,6 +5,7 @@ namespace Teste\Funcional;
 use Framework\DW3Sessao;
 use Modelo\Usuario;
 use \Teste\Teste;
+use Controlador\UsuarioControlador;
 
 class TesteLogin extends Teste
 {
@@ -33,7 +34,7 @@ class TesteLogin extends Teste
     $this->verificar(DW3Sessao::get('usuario') != null);
   }
 
-  public function testeLoginInvalido()
+  public function testeDeslogar()
   {
     (new Usuario(
       'Matheus',

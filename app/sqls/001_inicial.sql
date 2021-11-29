@@ -9,5 +9,17 @@ CREATE TABLE usuarios (
   password VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 )
+ENGINE = InnoDB;
 
+CREATE TABLE arquivos (
+  id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  type VARCHAR(255) NOT NULL,
+  size INT NOT NULL,
+  path VARCHAR(255) NOT NULL,
+  upload_date DATETIME NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES usuarios (id)
+)
 ENGINE = InnoDB;

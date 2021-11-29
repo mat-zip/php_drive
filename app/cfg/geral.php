@@ -29,3 +29,5 @@ const URL_CSS = URL_PUBLICO . 'css/';
 const URL_FONTS = URL_PUBLICO . 'fonts/';
 const URL_IMG = URL_PUBLICO . 'img/';
 const URL_JS = URL_PUBLICO . 'js/';
+
+const URL_ARQUIVOS = PASTA_RAIZ . 'arquivos/';

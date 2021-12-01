@@ -67,11 +67,11 @@ nav ul li img {
 
 .nav-wrapper .btn-flat {
   background-color: #4285f4 !important;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 500;
   height: 30px;
   line-height: 30px;
-  width: 94px;
+  width: 100px;
 }
 
 .nav-2,
@@ -202,20 +202,22 @@ input[type=search]::placeholder {
 }
 
 
-.modal { 
+.modal {
   word-wrap: normal;
-  
+
 }
+
 #progress-bar {
   width: 100%;
 }
+
 #output {
   font-size: 20px;
   word-wrap: break-word;
 }
 
 /* drag n drop */
- 
+
 .drop-area {
   border: 2px dashed #ccc;
   border-radius: 20px;
@@ -223,11 +225,12 @@ input[type=search]::placeholder {
   margin: 50px auto;
   padding: 20px;
 }
+
 .drop-area.highlight {
   border-color: purple;
-} 
+}
 
-#slide-out{
+#slide-out {
   width: 32rem;
 }
 
@@ -238,4 +241,13 @@ input[type=search]::placeholder {
 
 .expandable-link:hover {
   font-size: 1.7rem;
+}
+
+.delete-icon {
+  background: none;
+  border: none;
+}
+
+.delete-icon:hover {
+  cursor: pointer;
 }

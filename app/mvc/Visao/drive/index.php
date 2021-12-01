@@ -2,7 +2,7 @@
   <nav class="nav-extended white">
     <div class="nav-wrapper white">
       <ul>
-        <li><a href="<?= URL_RAIZ . 'drive'?>" class="title grey-text text-darken-1">PHP Drive</a></li>
+        <li><a href="<?= URL_RAIZ . 'drive' ?>" class="title grey-text text-darken-1">PHP Drive</a></li>
         <li class="title grey-text text-darken-1">| <?= $fullName ?> </li>
         <li>
           <div class="search-wrapper">
@@ -27,7 +27,7 @@
     <div class="nav-wrapper">
       <ul>
         <li>
-          <form action="<?= URL_RAIZ . 'drive'?>" id="upload-file" method="POST" enctype="multipart/form-data">
+          <form action="<?= URL_RAIZ . 'drive' ?>" id="upload-file" method="POST" enctype="multipart/form-data">
             <div class="file-field input-field valign-wrapper">
               <div class="btn blue">
                 <span>New</span>
@@ -48,7 +48,7 @@
 </div>
 
 <ul class="side-nav fixed floating transparent z-depth-0">
-  <li class="active"><a href="<?= URL_RAIZ . 'drive'?>"><i class="material-icons blue-text text-darken-1">dashboard</i>My Drive</a>
+  <li class="active"><a href="<?= URL_RAIZ . 'drive' ?>"><i class="material-icons blue-text text-darken-1">dashboard</i>My Drive</a>
   </li>
 </ul>
 
@@ -83,6 +83,10 @@
           </th>
         </tr>
       </thead>
+      <?php if ($mensagem) : ?>
+        <p class="red-text text-darken-3"><strong><?= $mensagem ?></strong></p>
+      <?php endif ?>
+
       <?php if (empty($arquivos)) : ?>
         <tr>
           <td colspan="99" class="center-align">No files found in your database</td>
@@ -92,10 +96,10 @@
       <?php foreach ($arquivos as $arquivo) : ?>
         <tbody id="tbody">
           <tr>
-            <td><i class="material-icons red600 left">movie</i><?= $arquivo->getName()?></td>
+            <td><i class="material-icons purple-text left"><?= $arquivo->getIconByType() ?></i><?= $arquivo->getName() ?></td>
             <td><?= $fullName ?></td>
-            <td><?=$arquivo->getUploadDate()?></td>
-            <td><?= ceil($arquivo->getSize()/1024) . ' KB'?></td>
+            <td><?= $arquivo->getUploadDate() ?></td>
+            <td><?= ceil($arquivo->getSize() / 1024) . ' KB' ?></td>
 
             <td>
               <form action="../../../public/pages/comments.php" method="POST">
@@ -103,37 +107,15 @@
                 <button type="submit" class="btn-flat"><i class="material-icons btn-comment">comment</i></button>
               </form>
             </td>
-            <td><i class="material-icons left btn-download">download</i></td>
-            <td><i class="material-icons left btn-delete">delete</i></td>
-          </tr>
-          <!-- <tr>
-            <td><i class="material-icons left">content_copy</i> php-no-lado-servidor.pdf</td>
-            <td>system_user</td>
-            <td>27 de agosto de 2021 14:11</td>
-            <td>1 GB</td>
             <td>
-              <form action="../../../public/pages/comments.php" method="POST">
-                <input type='hidden' name='id' value='2'>
-                <button type="submit" class="btn-flat"><i class="material-icons btn-comment">comment</i></button>
+              <form action="<?= URL_RAIZ . 'drive/' . $arquivo->getId() ?>" method="POST">
+                <input type="hidden" name="_metodo" value="DELETE">
+                <button type="submit" class="btn-flat">
+                  <i class="material-icons left">delete</i>
+                </button>
               </form>
             </td>
-            <td><i class="material-icons left btn-download">download</i></td>
-            <td><i class="material-icons left btn-delete">delete</i></td>
           </tr>
-          <tr>
-            <td><i class="material-icons yellow600 left">image</i> carlos-009997774.jpg</td>
-            <td>system_user</td>
-            <td>27 de agosto de 2021 14:12</td>
-            <td>5 MB</td>
-            <td>
-              <form action="../../../public/pages/comments.php" method="POST">
-                <input type='hidden' name='id' value='3'>
-                <button type="submit" class="btn-flat"><i class="material-icons btn-comment">comment</i></button>
-              </form>
-            </td>
-            <td><i class="material-icons left btn-download">download</i></td>
-            <td><i class="material-icons left btn-delete">delete</i></td>
-          </tr> -->
         </tbody>
       <?php endforeach ?>
     </table>

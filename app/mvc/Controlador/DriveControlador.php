@@ -26,6 +26,7 @@ class DriveControlador extends Controlador
         'email' => $usuario->getEmail(),
         'profilePhoto' => $usuario->getProfilePhoto(),
         'arquivos' => $arquivos,
+        'mensagem' => DW3Sessao::getFlash('mensagem', null)
       ],
       'drive-template.php'
     );
@@ -41,22 +42,39 @@ class DriveControlador extends Controlador
       $caminhoSalvar = URL_ARQUIVOS . $nome;
       $dataAtual = $this->obterDataAtual();
 
-      
+      if ($nome == '' || $tipo == '' || $tamanho == 0) {
+        DW3Sessao::setFlash('mensagem', 'File sent incorrectly, please try again');
+        $this->redirecionar(URL_RAIZ . 'drive');
+      }
 
       $idUsuario = DW3Sessao::get('usuario');
 
-      $arquivo = new Arquivo($idUsuario, $nome, $tipo, $tamanho, $caminhoSalvar, $dataAtual);
+      $arquivo = new Arquivo(
+        $idUsuario,
+        $nome,
+        $tipo,
+        $tamanho,
+        $caminhoSalvar,
+        $dataAtual
+      );
+
       $arquivo->salvar();
       move_uploaded_file($caminhoAtual, $caminhoSalvar);
       $this->redirecionar(URL_RAIZ . 'drive');
     }
   }
 
+  public function destruir($id)
+  {
+    Arquivo::destruir($id);
+    $this->redirecionar(URL_RAIZ . 'drive');
+  }
+
   public function obterDataAtual()
   {
     $fusoHorario = new DateTimeZone('America/Sao_Paulo');
     $agora = new DateTime('now', $fusoHorario); // com fuso-horário
-    $tempoFormatado = $agora->format('H:i:s d/m/Y');
+    $tempoFormatado = $agora->format('Y-m-d H:i:s');
     return $tempoFormatado;
   }
 }

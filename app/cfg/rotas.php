@@ -19,4 +19,7 @@ $rotas = [
         'GET' => '\Controlador\DriveControlador#index',
         'POST' => '\Controlador\DriveControlador#armazenar',
     ],
+    '/drive/?' => [
+        'DELETE' => '\Controlador\DriveControlador#destruir',
+    ],
 ];

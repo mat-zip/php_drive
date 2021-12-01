@@ -9,6 +9,7 @@ class Arquivo extends Modelo
 {
   const BUSCAR_TODOS = 'SELECT a.name, a.type, a.size, a.path, a.upload_date, a.id id, u.id user_id FROM arquivos a JOIN usuarios u ON (a.user_id = u.id) ORDER BY a.id';
   const INSERIR = 'INSERT INTO arquivos(user_id, name, type, size, path, upload_date) VALUES (?,?,?,?,?,?)';
+  const DELETAR = 'DELETE FROM arquivos WHERE id = ?';
 
   private $id;
   private $user_id;
@@ -73,6 +74,7 @@ class Arquivo extends Modelo
     $this->inserir();
   }
 
+
   public function inserir()
   {
     DW3BancoDeDados::getPdo()->beginTransaction();
@@ -108,5 +110,26 @@ class Arquivo extends Modelo
     }
 
     return $arquivos;
+  }
+
+  public static function destruir($id)
+  {
+    $comando = DW3BancoDeDados::prepare(self::DELETAR);
+    $comando->bindValue(1, $id, PDO::PARAM_INT);
+    $comando->execute();
+  }
+
+  public function getIconByType()
+  {
+    if ($this->getType() == 'image/png' || $this->getType() == 'image/jpg' || $this->getType() == 'image/jpeg') {
+      return 'image';
+    }
+    if ($this->getType() == 'video/mp4' || $this->getType() == 'video/wav') {
+      return 'movie';
+    }
+    if ($this->getType() == 'audio/mpeg') {
+      return 'audiotrack';
+    }
+    return 'content_copy';
   }
 }

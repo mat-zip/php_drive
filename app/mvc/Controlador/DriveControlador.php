@@ -2,8 +2,6 @@
 
 namespace Controlador;
 
-use DateTime;
-use DateTimeZone;
 use Framework\DW3Sessao;
 use Modelo\Arquivo;
 use Modelo\Usuario;
@@ -20,6 +18,7 @@ class DriveControlador extends Controlador
     $this->visao(
       'drive/index.php',
       [
+        'id' => $usuario->getId(),
         'name' => $usuario->getName(),
         'surname' => $usuario->getSurname(),
         'fullName' => $usuario->getFullName(),
@@ -68,13 +67,5 @@ class DriveControlador extends Controlador
   {
     Arquivo::destruir($id);
     $this->redirecionar(URL_RAIZ . 'drive');
-  }
-
-  public function obterDataAtual()
-  {
-    $fusoHorario = new DateTimeZone('America/Sao_Paulo');
-    $agora = new DateTime('now', $fusoHorario); // com fuso-horário
-    $tempoFormatado = $agora->format('Y-m-d H:i:s');
-    return $tempoFormatado;
   }
 }

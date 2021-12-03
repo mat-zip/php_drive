@@ -10,6 +10,7 @@ class Arquivo extends Modelo
   const BUSCAR_TODOS = 'SELECT a.name, a.type, a.size, a.path, a.upload_date, a.id id, u.id user_id FROM arquivos a JOIN usuarios u ON (a.user_id = u.id) ORDER BY a.id';
   const INSERIR = 'INSERT INTO arquivos(user_id, name, type, size, path, upload_date) VALUES (?,?,?,?,?,?)';
   const DELETAR = 'DELETE FROM arquivos WHERE id = ?';
+  const BUSCAR_ID = 'SELECT * FROM arquivos WHERE id = ?';
 
   private $id;
   private $user_id;
@@ -114,9 +115,31 @@ class Arquivo extends Modelo
 
   public static function destruir($id)
   {
+    $usuario = Arquivo::buscarId($id);
+
+    unlink($usuario->getPath());    // Deleta o arquivo no caminho especificado
+
     $comando = DW3BancoDeDados::prepare(self::DELETAR);
     $comando->bindValue(1, $id, PDO::PARAM_INT);
     $comando->execute();
+  }
+
+  public static function buscarId($id)
+  {
+    $comando = DW3BancoDeDados::prepare(self::BUSCAR_ID);
+    $comando->bindValue(1, $id, PDO::PARAM_INT);
+    $comando->execute();
+    $registro = $comando->fetch();
+
+    return new Arquivo(
+      $registro['user_id'],
+      $registro['name'],
+      $registro['type'],
+      $registro['size'],
+      $registro['path'],
+      $registro['upload_date'],
+      $registro['id']
+    );
   }
 
   public function getIconByType()

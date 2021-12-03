@@ -102,10 +102,9 @@
             <td><?= ceil($arquivo->getSize() / 1024) . ' KB' ?></td>
 
             <td>
-              <form action="../../../public/pages/comments.php" method="POST">
-                <input type='hidden' name='id' value='1'>
-                <button type="submit" class="btn-flat"><i class="material-icons btn-comment">comment</i></button>
-              </form>
+              <a href="<?= URL_RAIZ . 'drive/' . $arquivo->getId() . '/comentarios' ?>">
+                <i class="material-icons btn-comment btn-flat">comment</i>
+              </a>
             </td>
             <td>
               <form action="<?= URL_RAIZ . 'drive/' . $arquivo->getId() ?>" method="POST">

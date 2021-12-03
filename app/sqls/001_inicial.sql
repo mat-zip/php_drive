@@ -23,3 +23,15 @@ CREATE TABLE arquivos (
   FOREIGN KEY (user_id) REFERENCES usuarios (id)
 )
 ENGINE = InnoDB;
+
+CREATE TABLE comentarios (
+  id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  file_id INT NOT NULL,
+  text VARCHAR(255) NOT NULL,
+  upload_date DATETIME NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES usuarios (id),
+  FOREIGN KEY (file_id) REFERENCES arquivos (id)
+)
+ENGINE = InnoDB;

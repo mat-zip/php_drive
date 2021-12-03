@@ -2,6 +2,8 @@
 
 namespace Controlador;
 
+use DateTime;
+use DateTimeZone;
 use \Modelo\Usuario;
 use \Framework\DW3Controlador;
 use \Framework\DW3Sessao;
@@ -27,5 +29,14 @@ abstract class Controlador extends DW3Controlador
       $this->usuario = Usuario::buscarId($usuarioId);
     }
     return $this->usuario;
+  }
+
+  
+  public function obterDataAtual()
+  {
+    $fusoHorario = new DateTimeZone('America/Sao_Paulo');
+    $agora = new DateTime('now', $fusoHorario); // com fuso-horário
+    $tempoFormatado = $agora->format('Y-m-d H:i:s');
+    return $tempoFormatado;
   }
 }

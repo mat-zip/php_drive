@@ -10,10 +10,17 @@ class DriveControlador extends Controlador
 {
   public function index()
   {
+    
     $this->verificarLogado();
     $idUsuario = DW3Sessao::get('usuario');
     $usuario = Usuario::buscarId($idUsuario);
-    $arquivos = Arquivo::buscarTodos();
+    if(isset($_GET['order_by'])){
+      $order_by = $_GET['order_by'];
+      $arquivos = Arquivo::buscarTodos($idUsuario, $order_by);
+    } else {
+      $arquivos = Arquivo::buscarTodos($idUsuario);
+    }
+
 
     $this->visao(
       'drive/index.php',
@@ -42,7 +49,6 @@ class DriveControlador extends Controlador
       $dataAtual = $this->obterDataAtual();
 
       if ($nome == '' || $tipo == '' || $tamanho == 0) {
-        DW3Sessao::setFlash('mensagem', 'File sent incorrectly, please try again');
         $this->redirecionar(URL_RAIZ . 'drive');
       }
 
@@ -59,6 +65,7 @@ class DriveControlador extends Controlador
 
       $arquivo->salvar();
       move_uploaded_file($caminhoAtual, $caminhoSalvar);
+      DW3Sessao::setFlash('mensagem', 'File sent successfully');
       $this->redirecionar(URL_RAIZ . 'drive');
     }
   }
@@ -66,6 +73,7 @@ class DriveControlador extends Controlador
   public function destruir($id)
   {
     Arquivo::destruir($id);
+    DW3Sessao::setFlash('mensagem', 'File deleted successfully');
     $this->redirecionar(URL_RAIZ . 'drive');
   }
 }

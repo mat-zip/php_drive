@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="<?= URL_CSS . 'style.css' ?>">
     <link rel="stylesheet" href="<?= URL_CSS . 'pointer.css' ?>">
-    <script src="<?= URL_JS . 'jquery-3.1.1.min.js'?>"></script>
+    <script src="<?= URL_JS . 'jquery-3.1.1.min.js' ?>"></script>
 
 </head>
 
@@ -40,7 +40,11 @@
         </nav>
     </div>
 
+
     <div class='container'>
+        <?php if ($mensagem) : ?>
+            <p class="green-text text-darken-3"><strong><?= $mensagem ?></strong></p>
+        <?php endif ?>
         <!-- Input Texto do Comentário -->
         <div class='row valign-wrapper'>
             <div class='col s1'>
@@ -49,8 +53,8 @@
             <div class='col s11'>
                 <form action='<?= URL_RAIZ . 'drive/' . $arquivo->getId() . '/comentarios' ?>' method='POST'>
                     <div class='input-field'>
-                        <textarea name='text' id='textarea1' class='materialize-textarea'></textarea>
-                        <label for='textarea1'>Digite seu comentário</label>
+                        <textarea name='text' id='textarea1' class='materialize-textarea' required></textarea>
+                        <label for='textarea1'>Type your comment here</label>
                     </div>
                     <button type='submit' class='grey btn col s2'>submit</button>
                 </form>
@@ -60,9 +64,6 @@
         <hr class='divider'>
 
         <?php
-
-        use Modelo\Comentario;
-
         if (empty($comentarios)) : ?>
             <h4 class="center">No comments yet</h4>
         <?php endif ?>
@@ -78,10 +79,9 @@
                         <?= $comentario->getText() ?>
                         <div class='row'>
                             <small class='col s8 comment-date'><?= $comentario->getUploadDate() ?></small>
-                            <form class='col s1' action='edit-comment.php' method='POST'>
-                                <input type='hidden' name='id' value='1'>
-                                <button type='submit' class='btn-flat'><i class='material-icons comment-edit'>edit</i></button>
-                            </form>
+                            <a class='col s1 btn-flat' href="<?= URL_RAIZ . 'drive/' . $comentario->getId() . '/editar' ?>">
+                                <i class='material-icons comment-edit'>edit</i>
+                            </a>
 
                             <form action="<?= URL_RAIZ . 'drive/' . $arquivo->getId() . '/comentarios' ?>" method="POST">
                                 <input type="hidden" name="_metodo" value="DELETE">

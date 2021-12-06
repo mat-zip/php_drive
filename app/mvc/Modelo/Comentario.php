@@ -7,10 +7,11 @@ use Framework\DW3BancoDeDados;
 
 class Comentario extends Modelo
 {
-  const BUSCAR_POR_ID_ARQUIVO = 'SELECT * FROM comentarios WHERE file_id = ?';
+  const BUSCAR_POR_ID_ARQUIVO = 'SELECT * FROM comentarios WHERE file_id = ? ORDER BY upload_date ASC';
   const INSERIR = 'INSERT INTO comentarios(user_id, file_id, text, upload_date) VALUES (?,?,?,?)';
   const BUSCAR_ID = 'SELECT * FROM comentarios WHERE id = ?';
   const DELETAR = 'DELETE FROM comentarios WHERE id = ?';
+  const ATUALIZAR = 'UPDATE comentarios SET text = ?, upload_date = ? WHERE id = ?';
 
   private $id;
   private $userId;
@@ -53,9 +54,23 @@ class Comentario extends Modelo
     return $this->uploadDate;
   }
 
+  public function setText($text)
+  {
+    $this->text = $text;
+  }
+
+  public function setUploadDate($uploadDate)
+  {
+    $this->uploadDate = $uploadDate;
+  }
+
   public function salvar()
   {
-    $this->inserir();
+    if ($this->id == null) {
+      $this->inserir();
+    } else {
+      $this->atualizar();
+    }
   }
 
   public function inserir()
@@ -115,6 +130,14 @@ class Comentario extends Modelo
 
     $comando = DW3BancoDeDados::prepare(self::DELETAR);
     $comando->bindValue(1, $id, PDO::PARAM_INT);
+    $comando->execute();
+  }
+
+  public function atualizar(){
+    $comando = DW3BancoDeDados::prepare(self::ATUALIZAR);
+    $comando->bindValue(1, $this->text, PDO::PARAM_STR);
+    $comando->bindValue(2, $this->uploadDate);
+    $comando->bindValue(3, $this->id, PDO::PARAM_INT);
     $comando->execute();
   }
 }

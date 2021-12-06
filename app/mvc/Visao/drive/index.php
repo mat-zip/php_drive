@@ -4,12 +4,6 @@
       <ul>
         <li><a href="<?= URL_RAIZ . 'drive' ?>" class="title grey-text text-darken-1">PHP Drive</a></li>
         <li class="title grey-text text-darken-1">| <?= $fullName ?> </li>
-        <li>
-          <div class="search-wrapper">
-            <i class="material-icons">search</i>
-            <input type="search" name="Search" placeholder="Search Drive" />
-          </div>
-        </li>
       </ul>
       <ul class="right">
         <li><img src="<?= $profilePhoto ?>" class="circle"></li>
@@ -59,9 +53,13 @@
         <tr>
           <th>
             Name
-            <button class="btn-flat waves-effect order-by-name">
-              <i class="material-icons">arrow_upward</i>
-            </button>
+            <form action="<?= URL_RAIZ . 'drive' ?>" method="GET">
+              <input type="hidden" name="order_by" value="name">
+              <button class="btn-flat waves-effect " type="submit">
+                <i class="material-icons">arrow_upward</i>
+              </button>
+            </form>
+
           </th>
 
           <th>
@@ -70,21 +68,27 @@
 
           <th>
             Upload Date
-            <button class="btn-flat waves-effect order-by-time">
-              <i class="material-icons">arrow_upward</i>
-            </button>
+            <form action="<?= URL_RAIZ . 'drive' ?>" method="GET">
+              <input type="hidden" name="order_by" value="date">
+              <button class="btn-flat waves-effect " type="submit">
+                <i class="material-icons">arrow_upward</i>
+              </button>
+            </form>
           </th>
 
           <th>
             File Size
-            <button class="btn-flat waves-effect order-by-size">
-              <i class="material-icons">arrow_upward</i>
-            </button>
+            <form action="<?= URL_RAIZ . 'drive' ?>" method="GET">
+              <input type="hidden" name="order_by" value="size">
+              <button class="btn-flat waves-effect" type="submit">
+                <i class="material-icons">arrow_upward</i>
+              </button>
+            </form>
           </th>
         </tr>
       </thead>
       <?php if ($mensagem) : ?>
-        <p class="red-text text-darken-3"><strong><?= $mensagem ?></strong></p>
+        <p class="green-text text-darken-3"><strong><?= $mensagem ?></strong></p>
       <?php endif ?>
 
       <?php if (empty($arquivos)) : ?>

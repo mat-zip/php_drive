@@ -7,7 +7,10 @@ use \Framework\DW3BancoDeDados;
 
 class Arquivo extends Modelo
 {
-  const BUSCAR_TODOS = 'SELECT a.name, a.type, a.size, a.path, a.upload_date, a.id id, u.id user_id FROM arquivos a JOIN usuarios u ON (a.user_id = u.id) ORDER BY a.id';
+  const BUSCAR_TODOS = 'SELECT a.name, a.type, a.size, a.path, a.upload_date, a.id id, u.id user_id FROM arquivos a JOIN usuarios u ON (a.user_id = u.id) WHERE u.id = ? ORDER BY a.id';
+  const BUSCAR_TODOS_ORDER_NAME = 'SELECT a.name, a.type, a.size, a.path, a.upload_date, a.id id, u.id user_id FROM arquivos a JOIN usuarios u ON (a.user_id = u.id) WHERE u.id = ? ORDER BY a.name';
+  const BUSCAR_TODOS_ORDER_DATE = 'SELECT a.name, a.type, a.size, a.path, a.upload_date, a.id id, u.id user_id FROM arquivos a JOIN usuarios u ON (a.user_id = u.id) WHERE u.id = ? ORDER BY a.upload_date';
+  const BUSCAR_TODOS_ORDER_FILE_SIZE = 'SELECT a.name, a.type, a.size, a.path, a.upload_date, a.id id, u.id user_id FROM arquivos a JOIN usuarios u ON (a.user_id = u.id) WHERE u.id = ? ORDER BY a.size';
   const INSERIR = 'INSERT INTO arquivos(user_id, name, type, size, path, upload_date) VALUES (?,?,?,?,?,?)';
   const DELETAR = 'DELETE FROM arquivos WHERE id = ?';
   const BUSCAR_ID = 'SELECT * FROM arquivos WHERE id = ?';
@@ -75,7 +78,6 @@ class Arquivo extends Modelo
     $this->inserir();
   }
 
-
   public function inserir()
   {
     DW3BancoDeDados::getPdo()->beginTransaction();
@@ -91,9 +93,21 @@ class Arquivo extends Modelo
     DW3BancoDeDados::getPdo()->commit();
   }
 
-  public static function buscarTodos()
+  public static function buscarTodos($id, $order_by = null)
   {
-    $comando = DW3BancoDeDados::prepare(self::BUSCAR_TODOS);
+    if ($order_by == null)
+      $comando = DW3BancoDeDados::prepare(self::BUSCAR_TODOS);
+
+    if ($order_by == 'name')
+      $comando = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_ORDER_NAME);
+
+    if ($order_by == 'date')
+      $comando = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_ORDER_DATE);
+
+    if ($order_by == 'size')
+      $comando = DW3BancoDeDados::prepare(self::BUSCAR_TODOS_ORDER_FILE_SIZE);
+
+    $comando->bindValue(1, $id, PDO::PARAM_INT);
     $comando->execute();
     $registros = $comando->fetchAll();
     $arquivos = [];

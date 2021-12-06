@@ -25,6 +25,10 @@ $rotas = [
     '/drive/?/comentarios' => [
         'GET' => '\Controlador\ComentarioControlador#mostrar',
         'POST' => 'Controlador\ComentarioControlador#armazenar',
-        'DELETE' => 'Controlador\ComentarioControlador#destruir'
+        'DELETE' => 'Controlador\ComentarioControlador#destruir',
+        'PATCH' => 'Controlador\ComentarioControlador#atualizar'
+    ],
+    '/drive/?/editar' => [
+        'GET' => 'Controlador\ComentarioControlador#editar',
     ],
 ];
